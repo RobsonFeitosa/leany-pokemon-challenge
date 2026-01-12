@@ -8,7 +8,7 @@ Este projeto é a implementação do desafio técnico para a Leany. O foco princ
 - **Gestão de Times**: Criação de times com limite de 5 pokémons e regras de integridade.
 - **Integração PokéAPI**: Sincronização automática de dados de pokémons diretamente da API oficial.
 - **Performance com SWC**: Compilação e execução de testes ultra-rápidos com Rust.
-- **Documentação Swagger**: API documentada e testável via `/api`.
+- **Documentação Swagger**: API documentada e testável via `/docs`.
 - **Testes & Cobertura**: Suite de testes com Jest e feedback instantâneo.
 - **Persistência Robusta**: Integração com PostgreSQL via TypeORM e suporte a Migrations.
 
@@ -61,8 +61,7 @@ src/
 │
 ├── app.module.ts                    
 └── main.ts                          
-```
-──
+``` 
 
 ## 🛠️ Tecnologias Principais
 
