@@ -31,6 +31,6 @@ import { SyncPokemonsJob } from './infra/jobs/sync-pokemons.job';
             useClass: FetchPokeApiProvider,
         },
     ],
-    exports: ['PokemonRepository', 'PokeApiProvider'],
+    exports: ['PokemonRepository', 'PokeApiProvider', SyncPokemonUseCase],
 })
 export class PokemonsModule { }

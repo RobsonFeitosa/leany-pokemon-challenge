@@ -24,10 +24,12 @@ async function bootstrap() {
   await app.startAllMicroservices();
 
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('Pokémon Challenge API')
+    .setDescription('API para gerenciamento de treinadores, times e pokémons com integração PokéAPI e ViaCEP.')
     .setVersion('1.0')
-    .addTag('cats')
+    .addTag('trainers')
+    .addTag('pokemons')
+    .addTag('teams')
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);

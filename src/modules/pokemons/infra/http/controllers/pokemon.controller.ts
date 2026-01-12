@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { CreatePokemonUseCase } from "../../../application/create-pokemon.use-case";
 import { IndexPokemonUseCase } from "../../../application/index-pokemon.use-case";

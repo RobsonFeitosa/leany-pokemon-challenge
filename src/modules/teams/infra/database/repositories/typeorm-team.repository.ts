@@ -77,6 +77,13 @@ export class TypeOrmTeamRepository implements TeamRepository {
         return this.findById(saved.id) as Promise<TeamDomain>;
     }
 
+    async savePokemonAssociation(teamId: string, pokemonId: string): Promise<void> {
+        const tp = new TeamPokemonEntity();
+        tp.team_id = teamId;
+        tp.pokemon_id = pokemonId;
+        await this.teamPokemonRepo.save(tp);
+    }
+
     async delete(id: string): Promise<void> {
         await this.ormRepo.softDelete(id);
     }

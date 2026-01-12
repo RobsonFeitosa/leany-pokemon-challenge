@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import type { TrainerRepository } from "../domain/repositories/trainer.repository";
 import type { TeamRepository } from "../../teams/domain/repositories/team.repository";
 
@@ -13,10 +13,7 @@ export class DeleteTrainerUseCase {
 
     async execute(id: string): Promise<void> {
         const trainer = await this.trainerRepository.findById(id);
-
-        if (!trainer) {
-            throw new NotFoundException('Trainer not found');
-        }
+        if (!trainer) throw new NotFoundException('Trainer not found');
 
         const teams = await this.teamRepository.findAllByTrainerId(id);
 
