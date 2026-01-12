@@ -1,16 +1,16 @@
 # 🚀 Backend – Pokémon Challenge (Clean Architecture)
 
-Backend desenvolvido com **NestJS** e **TypeScript**, aplicando princípios de **Arquitetura Limpa** e **DDD** para gerenciar treinadores, times e pokémons com integracões externas.
+Este projeto é a implementação do desafio técnico para a Leany. O foco principal foi criar uma arquitetura extensível utilizando NestJS e TypeORM, garantindo a integridade das regras de negócio e uma estratégia eficiente de cache para os dados da PokéAPI.
 
-## ✨ Funcionalidades
+##  Funcionalidades
 
-- 🗂️ **Gestão de Treinadores**: Cadastro completo com enriquecimento automático de endereço via ViaCEP.
-- 🛡️ **Gestão de Times**: Criação de times com limite de 5 pokémons e regras de integridade.
-- 🐱‍👤 **Integração PokéAPI**: Sincronização automática de dados de pokémons diretamente da API oficial.
-- ⚡ **Performance com SWC**: Compilação e execução de testes ultra-rápidos com Rust.
-- 📝 **Documentação Swagger**: API documentada e testável via `/api`.
-- 🧪 **Testes & Cobertura**: Suite de testes com Jest e feedback instantâneo.
-- 🗄️ **Persistência Robusta**: Integração com PostgreSQL via TypeORM e suporte a Migrations.
+- **Gestão de Treinadores**: Cadastro completo com enriquecimento automático de endereço via ViaCEP.
+- **Gestão de Times**: Criação de times com limite de 5 pokémons e regras de integridade.
+- **Integração PokéAPI**: Sincronização automática de dados de pokémons diretamente da API oficial.
+- **Performance com SWC**: Compilação e execução de testes ultra-rápidos com Rust.
+- **Documentação Swagger**: API documentada e testável via `/api`.
+- **Testes & Cobertura**: Suite de testes com Jest e feedback instantâneo.
+- **Persistência Robusta**: Integração com PostgreSQL via TypeORM e suporte a Migrations.
 
 ---
 
@@ -139,6 +139,37 @@ docker-compose up -d --build
 
 ---
 
+---## 🔐 Validação, Permissões e Ciclo de Vida
+
+Para garantir uma API robusta e segura, utilizei os recursos nativos do ciclo de vida do NestJS para separar as responsabilidades de validação e tratamento:
+
+### 1. Validação de Entrada e DTOs
+* **Sanitização:** Utilizei `class-validator` e `class-transformer` nos DTOs para garantir que apenas dados válidos cheguem aos Casos de Uso.
+* **Segurança de Tipagem:** O uso de TypeScript em todas as camadas impede que estados inconsistentes sejam processados ou persistidos.
+
+### 2. Gerenciamento de "Permissões" e Regras
+* **Integridade do Domínio:** Como o desafio não exigia autenticação JWT, as "permissões" foram implementadas como **Regras de Integridade** dentro dos Use Cases. 
+* **Blindagem de Negócio:** As restrições (limite de 5 Pokémon, bloqueio de exclusão de treinador com times) são tratadas como permissões de execução, garantindo que o sistema seja inviolável mesmo sem um sistema de login.
+* **Pronto para Evolução:** A arquitetura está preparada para a inclusão de **NestJS Guards** e **Decorators** para validação de identidade (ex: `OwnerId`) em futuras iterações.
+
+### 3. Interceptors e Exception Filters (Padronização)
+* **Interceptors:** Utilizados para interceptar as respostas de sucesso e garantir que o JSON retornado ao cliente siga sempre o mesmo padrão de estrutura.
+* **Exception Filters:** Implementado o `HttpExceptionFilter` para capturar exceções da camada de aplicação e transformá-las em respostas amigáveis. Isso evita o vazamento de logs internos ou erros brutos do banco de dados (PostgreSQL) para o usuário final.
+
+---
+
+---
+## 🧪 Testes Unitários e Cobertura
+
+A aplicação foi desenvolvida focando em alta testabilidade, atingindo **84% de cobertura global** e **100% de cobertura nos Casos de Uso (Business Logic)**.
+
+Para rodar os testes:
+```bash
+yarn test        # Executa os testes
+yarn test:cov    # Gera o relatório de cobertura
+
+---
+
 ---
 
 ## 📖 Documentação da API
@@ -150,7 +181,7 @@ Acesse o Swagger UI para explorar os endpoints REST:
 
 ## 👤 Autor
 
-**Robson Feitosa**
+**Robson Feitosa Pimentel**
 
 ---
 
