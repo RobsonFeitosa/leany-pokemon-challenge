@@ -31,6 +31,14 @@ export class TypeOrmPokemonRepository implements PokemonRepository {
         return BaseMapper.toDomain(entity, PokemonDomain);
     }
 
+    async findByName(name: string): Promise<PokemonDomain | null> {
+        const entity = await this.ormRepo.findOne({
+            where: { name: name.toLowerCase() }
+        });
+        if (!entity) return null;
+        return BaseMapper.toDomain(entity, PokemonDomain);
+    }
+
     async findAll(): Promise<PokemonDomain[]> {
         const entities = await this.ormRepo.find();
         return entities.map(entity => BaseMapper.toDomain(entity, PokemonDomain));

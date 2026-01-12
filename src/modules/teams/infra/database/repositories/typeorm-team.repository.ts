@@ -78,6 +78,6 @@ export class TypeOrmTeamRepository implements TeamRepository {
     }
 
     async delete(id: string): Promise<void> {
-        await this.ormRepo.delete(id);
+        await this.ormRepo.softDelete(id);
     }
 }

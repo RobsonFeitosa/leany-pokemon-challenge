@@ -12,7 +12,25 @@ export class SyncPokemonUseCase {
         private readonly pokeApiProvider: PokeApiProvider,
     ) { }
 
-    async execute(idOrName: string | number): Promise<Pokemon> {
+    async execute(idOrName: string | number, forceSync = false): Promise<Pokemon> {
+        if (!forceSync) {
+            let localPokemon: Pokemon | null = null;
+            if (typeof idOrName === 'number') {
+                localPokemon = await this.pokemonRepository.findByPokeApiId(idOrName);
+            } else {
+                const idAsNumber = parseInt(idOrName);
+                if (!isNaN(idAsNumber)) {
+                    localPokemon = await this.pokemonRepository.findByPokeApiId(idAsNumber);
+                } else {
+                    localPokemon = await this.pokemonRepository.findByName(idOrName.toLowerCase());
+                }
+            }
+
+            if (localPokemon) {
+                return localPokemon;
+            }
+        }
+
         const pokeData = await this.pokeApiProvider.getPokemon(idOrName);
 
         let pokemon = await this.pokemonRepository.findByPokeApiId(pokeData.id);

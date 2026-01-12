@@ -12,10 +12,9 @@ export class CreateTeamDto {
     @IsNotEmpty()
     trainer_id: string;
 
-    @ApiProperty({ example: ['uuid-pokemon1', 'uuid-pokemon2'], description: 'List of pokemon IDs (max 6)' })
+    @ApiProperty({ example: ['pikachu', 1, 'charizard'], description: 'List of pokemon names or PokeAPI IDs (max 5)' })
     @IsArray()
-    @IsUUID(undefined, { each: true })
     @ArrayMinSize(1)
-    @ArrayMaxSize(6)
-    pokemons: string[];
+    @ArrayMaxSize(5)
+    pokemons: (string | number)[];
 }

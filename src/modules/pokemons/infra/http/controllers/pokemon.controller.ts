@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { AuthGuard } from "src/shared/infra/http/guards/auth.guard";
 import { CreatePokemonUseCase } from "../../../application/create-pokemon.use-case";
 import { IndexPokemonUseCase } from "../../../application/index-pokemon.use-case";
 import { SyncPokemonUseCase } from "../../../application/sync-pokemon.use-case";
@@ -18,7 +17,6 @@ export class PokemonController {
     ) { }
 
     @Post('sync/all')
-    @UseGuards(AuthGuard)
     @ApiOperation({ summary: 'Sync all pokemons in database from PokeAPI' })
     @ApiResponse({ status: 200, description: 'All pokemons have been successfully synced.' })
     async syncAll() {
@@ -26,11 +24,10 @@ export class PokemonController {
     }
 
     @Post('sync/:idOrName')
-    @UseGuards(AuthGuard)
     @ApiOperation({ summary: 'Sync pokemon from PokeAPI' })
     @ApiResponse({ status: 200, description: 'The pokemon has been successfully synced.' })
     async sync(@Param('idOrName') idOrName: string) {
-        return this.syncPokemonUseCase.execute(idOrName);
+        return this.syncPokemonUseCase.execute(idOrName, true);
     }
 
     @Post()
@@ -41,7 +38,6 @@ export class PokemonController {
     }
 
     @Get()
-    @UseGuards(AuthGuard)
     @ApiOperation({ summary: 'List pokemons' })
     @ApiResponse({ status: 200, description: 'Return a list of pokemons.' })
     async findAll() {

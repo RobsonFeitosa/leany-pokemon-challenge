@@ -14,7 +14,7 @@ export class SyncAllPokemonsUseCase {
         const pokemons = await this.pokemonRepository.findAll();
 
         for (const pokemon of pokemons) {
-            await this.syncPokemonUseCase.execute(pokemon.getPokeApiId());
+            await this.syncPokemonUseCase.execute(pokemon.getPokeApiId(), true);
         }
     }
 }

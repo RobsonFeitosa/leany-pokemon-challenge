@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { AuthGuard } from "src/shared/infra/http/guards/auth.guard";
 import { CreateTeamUseCase } from "../../../application/create-team.use-case";
 import { IndexTeamUseCase } from "../../../application/index-team.use-case";
 import { CreateTeamDto } from "../dtos/create-team.dto";
@@ -21,7 +20,6 @@ export class TeamController {
     }
 
     @Get('trainer/:trainer_id')
-    @UseGuards(AuthGuard)
     @ApiOperation({ summary: 'List teams by trainer' })
     @ApiResponse({ status: 200, description: 'Return a list of teams.' })
     async findAllByTrainer(@Param('trainer_id') trainer_id: string) {

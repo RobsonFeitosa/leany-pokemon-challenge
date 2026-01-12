@@ -27,6 +27,11 @@ export class CreateTableTeams1768174364129 implements MigrationInterface {
                         type: "timestamp",
                         default: "now()",
                     },
+                    {
+                        name: "deleted_at",
+                        type: "timestamp",
+                        isNullable: true,
+                    },
                 ],
             })
         );
