@@ -88,9 +88,7 @@ src/
 
 1. **Instale as dependências:**
    ```bash
-   yarn install
-   # ou
-   npm install
+   yarn install 
    ```
 
 2. **Configure o ambiente:**
@@ -183,7 +181,7 @@ Para rodar os testes:
 ```bash
 yarn test        # Executa os testes
 yarn test:cov    # Gera o relatório de cobertura
-
+```
 ---
 
 ---
