@@ -1,4 +1,4 @@
-# 🚀 Backend – Pokémon Challenge (Clean Architecture)
+# Backend – Pokémon Challenge (Clean Architecture)
 
 Este projeto é a implementação do desafio técnico para a Leany. O foco principal foi criar uma arquitetura extensível utilizando NestJS e TypeORM, garantindo a integridade das regras de negócio e uma estratégia eficiente de cache para os dados da PokéAPI.
 
@@ -14,7 +14,7 @@ Este projeto é a implementação do desafio técnico para a Leany. O foco princ
 
 ---
 
-## 🏗️ Arquitetura do Projeto
+## Arquitetura do Projeto
 
 O projeto segue os padrões de **Clean Architecture** e **Domain-Driven Design (DDD)**, organizando as responsabilidades de forma clara.
 
@@ -25,9 +25,7 @@ O projeto segue os padrões de **Clean Architecture** e **Domain-Driven Design (
 * **Repository Pattern:** Desacoplamento total da lógica de persistência, facilitando a troca de banco de dados ou a implementação de testes unitários com Mocks.
 * **Performance com SWC:** Configuração do compilador SWC para garantir que o ciclo de desenvolvimento (Hot Reload) e a execução de testes sejam extremamente rápidos.
 
----
-
----
+--- 
 
 ### `Estrutura do projeto`
 
@@ -112,11 +110,7 @@ Para subir o banco de dados e a aplicação:
 docker-compose up -d --build
 ```
 
----
-
----
-
----
+--- 
 
 ## 📋 Regras de Negócio Implementadas
 
@@ -137,7 +131,7 @@ docker-compose up -d --build
 
 ---
 
----## 🔐 Validação, Permissões e Ciclo de Vida
+##  Validação, Permissões e Ciclo de Vida
 
 Para garantir uma API robusta e segura, utilizei os recursos nativos do ciclo de vida do NestJS para separar as responsabilidades de validação e tratamento:
 
@@ -156,8 +150,6 @@ Para garantir uma API robusta e segura, utilizei os recursos nativos do ciclo de
 
 ---
 
----
-
 ## 🧪 Guia de Testes Manuais (Fluxo Principal)
 
 Para validar as regras de negócio de ponta a ponta, você pode seguir este fluxo no Swagger (`/api`):
@@ -172,7 +164,6 @@ Para validar as regras de negócio de ponta a ponta, você pode seguir este flux
 
 ---
 
----
 ## 🧪 Testes Unitários e Cobertura
 
 A aplicação foi desenvolvida focando em alta testabilidade, atingindo **84% de cobertura global** e **100% de cobertura nos Casos de Uso (Business Logic)**.
@@ -182,9 +173,7 @@ Para rodar os testes:
 yarn test        # Executa os testes
 yarn test:cov    # Gera o relatório de cobertura
 ```
----
-
----
+--- 
 
 ## 📺 Apresentação e Demonstração Técnica
 
@@ -202,8 +191,7 @@ Devido à profundidade técnica do desafio, dividi a explicação em quatro part
 * 🎥 **Parte 4: Validação e Testes de Cobertura em Projeto de Desenvolvimento** [Assista aqui]https://www.loom.com/share/c42d8ea98ac44cbaa1e0f91f09227431)  
     *Foco: Demonstração prática no Swagger, validação de limites de time (5 Pokémon) e relatório de 84% de cobertura de testes.*
 
----
----
+--- 
 
 ## 🌐 Endpoints da API (Swagger)
 
@@ -212,9 +200,7 @@ A aplicação está disponível para testes nos seguintes ambientes:
 * 🚀 **Produção (Web):** [http://54.236.5.232:3333/docs](http://54.236.5.232:3333/docs)
 * 🏠 **Local:** [http://localhost:3333/docs](http://localhost:3333/docs)
 
----
-
----
+--- 
 
 ## 📖 Documentação da API
 
