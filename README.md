@@ -18,7 +18,7 @@ Este projeto é a implementação do desafio técnico para a Leany. O foco princ
 
 O projeto segue os padrões de **Clean Architecture** e **Domain-Driven Design (DDD)**, organizando as responsabilidades de forma clara.
 
-## 🛠 Decisões de Arquitetura (Nível Sênior)
+## 🛠 Decisões de Arquitetura 
 
 * **Clean Architecture:** Divisão clara entre `Domain` (Regras), `Application` (Casos de Uso) e `Infrastructure` (Frameworks/DB).
 * **Isolamento de Entidades:** Uso de **Mappers** para garantir que as entidades do TypeORM não vazem para os Controllers. A API trafega apenas **DTOs** e utiliza entidades de domínio puro internamente.
