@@ -10,7 +10,6 @@ export class RabbitMQProvider implements IMessageBrokerProvider {
     ) { }
 
     async publish(topic: string, payload: any): Promise<void> {
-        console.log(' publicando', topic, payload);
         this.client.emit(topic, payload);
     }
 }

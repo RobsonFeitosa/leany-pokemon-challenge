@@ -26,16 +26,5 @@ describe('RabbitMQProvider', () => {
 
             expect(clientProxy.emit).toHaveBeenCalledWith(topic, payload);
         });
-
-        it('should log to console when publishing', async () => {
-            const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
-            const topic = 'test-topic';
-            const payload = { data: 'test-payload' };
-
-            await provider.publish(topic, payload);
-
-            expect(consoleSpy).toHaveBeenCalledWith(' publicando', topic, payload);
-            consoleSpy.mockRestore();
-        });
     });
 });

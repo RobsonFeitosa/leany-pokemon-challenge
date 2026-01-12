@@ -11,7 +11,6 @@ export class SyncPokemonsJob {
 
     @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
     async handleCron() {
-        console.log('--- CRON TRIGGER: SYNC ALL POKEMONS ---');
         await this.messageBroker.publish('sync_all_pokemons', {});
     }
 }

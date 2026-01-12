@@ -43,7 +43,7 @@ async function bootstrap() {
     transform: true,
   }));
   app.useGlobalInterceptors(new TransformInterceptor());
-  // app.useGlobalFilters(new GlobalExceptionFilter());
+  app.useGlobalFilters(new GlobalExceptionFilter());
 
   await app.listen(process.env.PORT ?? 3000);
 }
