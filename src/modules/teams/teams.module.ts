@@ -1,0 +1,25 @@
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TeamController } from './infra/http/controllers/team.controller';
+import { TeamEntity } from './infra/database/entities/team.entity';
+import { TeamPokemonEntity } from './infra/database/entities/team-pokemon.entity';
+import { TypeOrmTeamRepository } from './infra/database/repositories/typeorm-team.repository';
+import { CreateTeamUseCase } from './application/create-team.use-case';
+import { IndexTeamUseCase } from './application/index-team.use-case';
+
+@Module({
+    imports: [
+        TypeOrmModule.forFeature([TeamEntity, TeamPokemonEntity]),
+    ],
+    controllers: [TeamController],
+    providers: [
+        CreateTeamUseCase,
+        IndexTeamUseCase,
+        {
+            provide: 'TeamRepository',
+            useClass: TypeOrmTeamRepository,
+        },
+    ],
+    exports: ['TeamRepository'],
+})
+export class TeamsModule { }
