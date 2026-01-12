@@ -100,7 +100,7 @@ src/
    ```bash
    yarn dev
    ```
-   O servidor estará disponível em: `http://localhost:3333`
+   O servidor estará disponível em: `http://localhost:3000`
 
 ---
 
@@ -159,6 +159,22 @@ Para garantir uma API robusta e segura, utilizei os recursos nativos do ciclo de
 ---
 
 ---
+
+## 🧪 Guia de Testes Manuais (Fluxo Principal)
+
+Para validar as regras de negócio de ponta a ponta, você pode seguir este fluxo no Swagger (`/api`):
+
+1. **Cadastro com CEP:** Crie um Treinador enviando apenas Nome e CEP. O sistema buscará o endereço automaticamente via **ViaCEP**.
+2. **Criação de Time:** Vincule um novo time ao ID do treinador criado.
+3. **Adição de Pokémon (Cache Strategy):** - Ao adicionar o primeiro Pokémon (ex: `pikachu`), o sistema sincroniza com a **PokéAPI** e persiste localmente.
+   - As próximas consultas ao mesmo Pokémon priorizam o banco local.
+4. **Validação de Limites:** Tente adicionar mais de 5 Pokémon no mesmo time para ver o bloqueio da regra de negócio (Erro 400).
+5. **Prevenção de Duplicidade:** Tente adicionar o mesmo Pokémon duas vezes no mesmo time para validar a restrição.
+6. **Integridade Referencial:** Tente deletar um Treinador que possui times ativos para validar o bloqueio de segurança.
+
+---
+
+---
 ## 🧪 Testes Unitários e Cobertura
 
 A aplicação foi desenvolvida focando em alta testabilidade, atingindo **84% de cobertura global** e **100% de cobertura nos Casos de Uso (Business Logic)**.
@@ -174,8 +190,11 @@ yarn test:cov    # Gera o relatório de cobertura
 
 ## 📖 Documentação da API
 
-Acesse o Swagger UI para explorar os endpoints REST:
-🔗 [http://localhost:3333/docs](http://localhost:3333/docs)
+Acesse o Swagger UI para explorar os endpoints REST Local:
+🔗 [http://localhost:3000/docs](http://localhost:3000/docs)
+
+Acesse o Swagger UI para explorar os endpoints REST web:
+🔗 [http://54.236.5.232:3000/docs](http://54.236.5.232:3000/docs)
 
 ---
 
