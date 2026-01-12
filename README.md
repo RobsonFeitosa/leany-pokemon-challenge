@@ -188,6 +188,36 @@ yarn test:cov    # Gera o relatório de cobertura
 
 ---
 
+## 📺 Apresentação e Demonstração Técnica
+
+Devido à profundidade técnica do desafio, dividi a explicação em quatro partes para facilitar a análise:
+
+* 🎥 **Parte 1: Arquitetura e Decisões Técnicas** [Assista aqui](https://www.loom.com/share/afaa500207f24d038520be4ec5b2627c)  
+    *Foco: Clean Architecture, DDD, Mappers e a organização da estrutura de pastas.*
+
+* 🎥 **Parte 2: Integrações e Regras de Negócio** [Assista aqui](https://www.loom.com/share/934111040ec94c8d8343917a3afd996d)  
+    *Foco: Implementação da integração com ViaCEP e as regras core de domínio.*
+
+* 🎥 **Parte 3: Gerenciamento de Pokémon: Adicionando e Atualizando Dados no Banco** [Assista aqui](https://www.loom.com/share/285b5cb297fa42928f2a47d0ec74635b)  
+    *Foco: Estratégia de Cache-aside, persistência de dados da PokéAPI e sincronização.*
+
+* 🎥 **Parte 4: Validação e Testes de Cobertura em Projeto de Desenvolvimento** [Assista aqui]https://www.loom.com/share/c42d8ea98ac44cbaa1e0f91f09227431)  
+    *Foco: Demonstração prática no Swagger, validação de limites de time (5 Pokémon) e relatório de 84% de cobertura de testes.*
+
+---
+---
+
+## 🌐 Endpoints da API (Swagger)
+
+A aplicação está disponível para testes nos seguintes ambientes:
+
+* 🚀 **Produção (Web):** [http://54.236.5.232:3333/docs](http://54.236.5.232:3333/docs)
+* 🏠 **Local:** [http://localhost:3333/docs](http://localhost:3333/docs)
+
+---
+
+---
+
 ## 📖 Documentação da API
 
 Acesse o Swagger UI para explorar os endpoints REST Local:
