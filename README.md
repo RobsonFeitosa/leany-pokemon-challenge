@@ -1,98 +1,215 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🚀 Backend – NestJS + Socket.IO (Clean Architecture)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend de um chat em tempo real desenvolvido com **NestJS**, **Socket.IO** e **TypeScript**, aplicando princípios de **Arquitetura Limpa** para garantir escalabilidade e manutenibilidade.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## ✨ Funcionalidades
 
-## Description
+- 💬 **Comunicação em Tempo Real**: Envio e recebimento de mensagens instantâneas via WebSockets.
+- 🏘️ **Gestão de Salas**: Criação e organização de salas de conversa.
+- ⚡ **Performance com SWC**: Compilação e execução de testes ultra-rápidos com Rust.
+- 📝 **Documentação Swagger**: API documentada e testável via `/docs`.
+- 🔒 **CORS Configurado**: Pronto para integração com frontends em diferentes origens.
+- 🧪 **Testes & Cobertura**: Suite de testes com Jest e SWC para feedback instantâneo.
+- 🗄️ **Persistência Robusta**: Integração com PostgreSQL via TypeORM.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## 🏗️ Arquitetura do Projeto
 
-```bash
-$ yarn install
-```
+O projeto segue os padrões de **Clean Architecture** e **Domain-Driven Design (DDD)**, organizando as responsabilidades de forma clara:
 
-## Compile and run the project
+### `src/app` (Camada de Domínio e Aplicação)
+- **Entities**: Definição dos objetos de negócio (Chat, Room, User).
+- **Use Cases**: Regras de negócio e fluxos da aplicação (Ex: `CreateChat`, `CreateRoom`).
+- **Repositories**: Interfaces que definem como os dados devem ser persistidos.
 
-```bash
-# development
-$ yarn run start
+### `src/infra` (Camada de Infraestrutura)
+- **http/**: Controllers, DTOs e gerenciamento de rotas REST.
+- **ws/**: Gateways de WebSocket (`ChatGateway`) para comunicação em tempo real.
+- **database/**: Implementações concretas do TypeORM, entidades de banco e migrations.
 
-# watch mode
-$ yarn run start:dev
+### `src/helpers`
+- Utilitários compartilhados e lógicas transversais.
 
-# production mode
-$ yarn run start:prod
-```
+---
 
-## Run tests
+### `Estrutura do projeto`
 
 ```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+src/
+├── modules/
+│   └── [domain-name]/               
+│       ├── domain/                  
+│       │   ├── entities/            
+│       │   ├── repositories/        
+│       │   ├── errors/              
+│       │   └── types/               
+│       ├── application/             
+│       │   └── use-cases/           
+│       ├── infra/                   
+│       │   ├── http/
+│       │   │   ├── controllers/     
+│       │   │   ├── dtos/            
+│       │   │   └── types/           
+│       │   ├── database/            
+│       │   │   ├── entities/        
+│       │   │   └── repositories/    
+│       │   ├── mappers/             
+│       │   └── providers/           
+│       └── [domain-name].module.ts  
+│
+├── shared/                          
+│   ├── domain/                      
+│   │   ├── errors/                  
+│   │   ├── types/                   
+│   │   └── helpers/                 
+│   └── infra/                       
+│       ├── http/
+│       │   ├── guards/              
+│       │   ├── interceptors/        
+│       │   └── filters/             
+│       ├── providers/               
+│       ├── database/
+│       │   └── migrations/          
+│       └── ws/                      
+│
+├── app.module.ts                    
+└── main.ts                          
 ```
+──
 
-## Deployment
+## 🛠️ Tecnologias Principais
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+- **NestJS** (v11)
+- **Socket.IO** (v4)
+- **TypeScript**
+- **TypeORM** & **PostgreSQL**
+- **SWC** (Compiler)
+- **Docker** & **Docker Compose**
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+---
+
+## � Como Iniciar
+
+### Pré-requisitos
+
+- **Node.js** >= 20
+- **Docker** & **Docker Compose** (Opcional, para ambiente isolado)
+
+### Instalação e Execução Local
+
+1. **Instale as dependências:**
+   ```bash
+   yarn install
+   # ou
+   npm install
+   ```
+
+2. **Configure o ambiente:**
+   Copie `.env.example` para `.env` e ajuste as credenciais do banco de dados.
+
+3. **Inicie o servidor (Desenvolvimento):**
+   ```bash
+   yarn dev
+   ```
+   O servidor estará disponível em: `http://localhost:3333`
+
+---
+
+## � Rodando com Docker
+
+### Docker Compose (Recomendado)
+
+Para subir o banco de dados e a aplicação:
 
 ```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
+docker-compose up -d --build
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
 
-## Resources
+## 📡 WebSocket – Eventos Principais
 
-Check out a few resources that may come in handy when working with NestJS:
+O gateway de chat está disponível para conexões via Socket.IO.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Inscrição (Subscribe)
+- `newMessage`: Recebe um payload contendo o tipo da entidade (Chat ou Room), o ID do usuário e o corpo da mensagem ou sala.
 
-## Support
+### Emissão (Emit)
+- `onMessage`: Notifica os clientes sobre a chegada de novas mensagens ou atualizações.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---
 
-## Stay in touch
+## 🏗️ Estrutura de Times
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+A modelagem de Times segue regras estritas de associação:
 
-## License
+- **Quantidade Limite**: Um Time pode ter entre **1 e 5 Pokémon**. Tentativas de adicionar mais de 5 são rejeitadas com erro apropriado.
+- **Vínculo com Treinador**: Cada Time está obrigatoriamente vinculado a um único Treinador (`trainer_id`).
+- **Associação de Pokémon**: A relação entre Times e Pokémon é de **Muitos-para-Muitos**, mas implementada através de uma entidade de associação explícita chamada `TeamPokemon`. 
+- **Entidade de Associação (`TeamPokemon`)**: Esta estrutura permite rastrear quando um Pokémon foi adicionado ao time e garante que a mesma instância de Pokémon não seja duplicada no mesmo time (através de restrições de unicidade no banco de dados e validação no Use Case).
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+---
+
+## 🛡️ Regras de Negócio - Exclusão e Sincronização
+
+### Exclusão (Soft Delete)
+- **Soft Delete em Cascata**: Ao excluir um Treinador, o sistema aplica um "Soft Delete" (exclusão lógica) tanto no registro do Treinador quanto em todos os seus Times associados.
+- **Persistência de Dados**: Os registros permanecem no banco de dados com a coluna `deleted_at` preenchida, garantindo histórico e integridade referencial.
+- **Associações**: Quando um Time é removido, suas associações na tabela `team_pokemons` permanecem vinculadas ao registro inativo do time.
+
+### Sincronização com PokéAPI (Local-First)
+- **Prioridade Local**: Ao criar um time informando nomes ou IDs da PokéAPI, o sistema primeiro verifica se o Pokémon já existe no banco local.
+- **Sync On-Demand**: Se o Pokémon não existir localmente, o sistema busca os dados na PokéAPI, persiste-os no banco local e então realiza a associação com o time.
+- **Sincronização Manual**: A PokéAPI é consultada apenas se o dado for inexistente localmente ou se uma sincronização manual/agendada for acionada.
+
+---
+
+## 🧪 Testes e Qualidade
+
+O projeto utiliza **SWC** para garantir que os testes rodem em milissegundos.
+
+```bash
+# Rodar todos os testes
+yarn test
+
+# Ver cobertura de código
+yarn test:cov
+```
+
+---
+
+## 🔌 Integrações Externas
+
+O sistema consome dois serviços externos principais para enriquecer a experiência e garantir a consistência dos dados:
+
+### 1. PokéAPI
+Utilizada para obter dados oficiais de Pokémon (ID, Nome, Imagem, Tipos).
+- **Busca**: Realizada via `SyncPokemonUseCase`. O sistema busca por Nome ou ID.
+- **Gravação**: Os dados obtidos são persistidos no banco local (`pokemons`) para consultas futuras ultrarrápidas.
+- **Reutilização (Cache)**: Implementamos uma estratégia **Local-First**. Antes de consultar a PokéAPI, o sistema verifica se o Pokémon já existe localmente. A API externa é consultada apenas se o dado for inexistente ou se for solicitada uma atualização explícita.
+
+### 2. Serviço de CEP (ViaCEP)
+Utilizado para validar e enriquecer os dados de endereço dos Treinadores.
+- **Fluxo de Dados**: Disponibilizamos um serviço interno (`CepService` / `GetCepAddressUseCase`) que consome a API do ViaCEP.
+- **Uso**: O frontend ou consumidor da API pode consultar o endereço completo a partir de um CEP via endpoint `GET /trainers/address/:cep`.
+- **Persistência**: Os dados de endereço (logradouro, bairro, cidade, estado) são persistidos junto ao registro do Treinador no banco de dados, garantindo que a informação esteja disponível mesmo se o serviço externo estiver instável.
+
+---
+
+## 📖 Documentação da API
+
+Acesse o Swagger UI para explorar os endpoints REST:
+🔗 [http://localhost:3333/docs](http://localhost:3333/docs)
+
+---
+
+## 👤 Autor
+
+**Robson Feitosa**
+
+---
+
+## 📄 Licença
+
+Este projeto está sob a licença [MIT](https://github.com/nestjs/nest/blob/master/LICENSE).

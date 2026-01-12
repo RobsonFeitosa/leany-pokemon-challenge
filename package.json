@@ -1,5 +1,5 @@
 {
-  "name": "leany-pokemon-challenge",
+  "name": "boiler-plate",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -9,7 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start:dev": "nest start -b swc --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -17,23 +17,42 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "npx typeorm-ts-node-commonjs",
+    "typeorm:cli": "npm run build && npx typeorm -d dist/shared/infra/database/typeorm.config.js"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
+    "@nestjs/microservices": "^11.1.11",
     "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/schedule": "^6.1.0",
+    "@nestjs/typeorm": "^11.0.0",
+    "amqp-connection-manager": "^5.0.0",
+    "amqplib": "^0.10.9",
+    "aws-sdk": "^2.1693.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.3",
+    "multer": "^2.0.2",
+    "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "typeorm": "^0.3.28"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
+    "@nestjs/swagger": "^11.2.4",
     "@nestjs/testing": "^11.0.1",
+    "@swc/cli": "^0.7.9",
+    "@swc/core": "^1.15.8",
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
+    "@types/mime": "^3.0.4",
+    "@types/multer": "^2.0.0",
     "@types/node": "^22.10.7",
     "@types/supertest": "^6.0.2",
     "eslint": "^9.18.0",
@@ -62,10 +81,9 @@
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/$1"
+    },
     "testEnvironment": "node"
   }
 }

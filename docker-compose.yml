@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres-bp
+    restart: always
+    environment:
+      - POSTGRES_DB=bp-nexus
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=fcac41078f2abd6c272b8601a8511f0c
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis-bp
+    restart: always
+    ports:
+      - "6379:6379"
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq-bp
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    ports:
+      - "5672:5672"
+      - "15672:15672"
