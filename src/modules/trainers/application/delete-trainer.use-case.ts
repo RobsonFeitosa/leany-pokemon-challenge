@@ -17,8 +17,8 @@ export class DeleteTrainerUseCase {
 
         const teams = await this.teamRepository.findAllByTrainerId(id);
 
-        for (const team of teams) {
-            await this.teamRepository.delete(team.getId());
+        if (teams.length > 0) {
+            throw new BadRequestException('Cannot delete trainer with active teams. Please delete or reassign the teams first.');
         }
 
         await this.trainerRepository.delete(id);

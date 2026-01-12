@@ -1,35 +1,31 @@
-# 🚀 Backend – NestJS + Socket.IO (Clean Architecture)
+# 🚀 Backend – Pokémon Challenge (Clean Architecture)
 
-Backend de um chat em tempo real desenvolvido com **NestJS**, **Socket.IO** e **TypeScript**, aplicando princípios de **Arquitetura Limpa** para garantir escalabilidade e manutenibilidade.
+Backend desenvolvido com **NestJS** e **TypeScript**, aplicando princípios de **Arquitetura Limpa** e **DDD** para gerenciar treinadores, times e pokémons com integracões externas.
 
 ## ✨ Funcionalidades
 
-- 💬 **Comunicação em Tempo Real**: Envio e recebimento de mensagens instantâneas via WebSockets.
-- 🏘️ **Gestão de Salas**: Criação e organização de salas de conversa.
+- 🗂️ **Gestão de Treinadores**: Cadastro completo com enriquecimento automático de endereço via ViaCEP.
+- 🛡️ **Gestão de Times**: Criação de times com limite de 5 pokémons e regras de integridade.
+- 🐱‍👤 **Integração PokéAPI**: Sincronização automática de dados de pokémons diretamente da API oficial.
 - ⚡ **Performance com SWC**: Compilação e execução de testes ultra-rápidos com Rust.
-- 📝 **Documentação Swagger**: API documentada e testável via `/docs`.
-- 🔒 **CORS Configurado**: Pronto para integração com frontends em diferentes origens.
-- 🧪 **Testes & Cobertura**: Suite de testes com Jest e SWC para feedback instantâneo.
-- 🗄️ **Persistência Robusta**: Integração com PostgreSQL via TypeORM.
+- 📝 **Documentação Swagger**: API documentada e testável via `/api`.
+- 🧪 **Testes & Cobertura**: Suite de testes com Jest e feedback instantâneo.
+- 🗄️ **Persistência Robusta**: Integração com PostgreSQL via TypeORM e suporte a Migrations.
 
 ---
 
 ## 🏗️ Arquitetura do Projeto
 
-O projeto segue os padrões de **Clean Architecture** e **Domain-Driven Design (DDD)**, organizando as responsabilidades de forma clara:
+O projeto segue os padrões de **Clean Architecture** e **Domain-Driven Design (DDD)**, organizando as responsabilidades de forma clara.
 
-### `src/app` (Camada de Domínio e Aplicação)
-- **Entities**: Definição dos objetos de negócio (Chat, Room, User).
-- **Use Cases**: Regras de negócio e fluxos da aplicação (Ex: `CreateChat`, `CreateRoom`).
-- **Repositories**: Interfaces que definem como os dados devem ser persistidos.
+## 🛠 Decisões de Arquitetura (Nível Sênior)
 
-### `src/infra` (Camada de Infraestrutura)
-- **http/**: Controllers, DTOs e gerenciamento de rotas REST.
-- **ws/**: Gateways de WebSocket (`ChatGateway`) para comunicação em tempo real.
-- **database/**: Implementações concretas do TypeORM, entidades de banco e migrations.
+* **Clean Architecture:** Divisão clara entre `Domain` (Regras), `Application` (Casos de Uso) e `Infrastructure` (Frameworks/DB).
+* **Isolamento de Entidades:** Uso de **Mappers** para garantir que as entidades do TypeORM não vazem para os Controllers. A API trafega apenas **DTOs** e utiliza entidades de domínio puro internamente.
+* **Repository Pattern:** Desacoplamento total da lógica de persistência, facilitando a troca de banco de dados ou a implementação de testes unitários com Mocks.
+* **Performance com SWC:** Configuração do compilador SWC para garantir que o ciclo de desenvolvimento (Hot Reload) e a execução de testes sejam extremamente rápidos.
 
-### `src/helpers`
-- Utilitários compartilhados e lógicas transversais.
+---
 
 ---
 
@@ -38,40 +34,32 @@ O projeto segue os padrões de **Clean Architecture** e **Domain-Driven Design (
 ```bash
 src/
 ├── modules/
-│   └── [domain-name]/               
+│   └── [module-name]/               
 │       ├── domain/                  
 │       │   ├── entities/            
 │       │   ├── repositories/        
-│       │   ├── errors/              
-│       │   └── types/               
+│       │   └── providers/ (interfaces)
 │       ├── application/             
-│       │   └── use-cases/           
-│       ├── infra/                   
-│       │   ├── http/
-│       │   │   ├── controllers/     
-│       │   │   ├── dtos/            
-│       │   │   └── types/           
-│       │   ├── database/            
-│       │   │   ├── entities/        
-│       │   │   └── repositories/    
-│       │   ├── mappers/             
-│       │   └── providers/           
-│       └── [domain-name].module.ts  
+│       └── infra/                   
+│           ├── http/
+│           │   ├── controllers/     
+│           │   └── dtos/            
+│           ├── database/            
+│           │   ├── entities/        
+│           │   └── repositories/    
+│           ├── providers/           
+│           └── jobs/                
 │
 ├── shared/                          
 │   ├── domain/                      
-│   │   ├── errors/                  
-│   │   ├── types/                   
-│   │   └── helpers/                 
 │   └── infra/                       
 │       ├── http/
-│       │   ├── guards/              
+│       │   ├── filters/             
 │       │   ├── interceptors/        
-│       │   └── filters/             
-│       ├── providers/               
-│       ├── database/
-│       │   └── migrations/          
-│       └── ws/                      
+│       │   └── providers/           
+│       └── database/
+│           ├── migrations/          
+│           └── base.mapper.ts       
 │
 ├── app.module.ts                    
 └── main.ts                          
@@ -81,10 +69,10 @@ src/
 ## 🛠️ Tecnologias Principais
 
 - **NestJS** (v11)
-- **Socket.IO** (v4)
 - **TypeScript**
 - **TypeORM** & **PostgreSQL**
 - **SWC** (Compiler)
+- **RabbitMQ** (Message Broker)
 - **Docker** & **Docker Compose**
 
 ---
@@ -128,72 +116,28 @@ docker-compose up -d --build
 
 ---
 
-## 📡 WebSocket – Eventos Principais
-
-O gateway de chat está disponível para conexões via Socket.IO.
-
-### Inscrição (Subscribe)
-- `newMessage`: Recebe um payload contendo o tipo da entidade (Chat ou Room), o ID do usuário e o corpo da mensagem ou sala.
-
-### Emissão (Emit)
-- `onMessage`: Notifica os clientes sobre a chegada de novas mensagens ou atualizações.
+---
 
 ---
 
-## 🏗️ Estrutura de Times
+## 📋 Regras de Negócio Implementadas
 
-A modelagem de Times segue regras estritas de associação:
+### 1. Treinador (Trainers)
+* **Enriquecimento com ViaCEP:** No cadastro, o sistema consome a API externa do ViaCEP para preencher automaticamente endereço, bairro, cidade e estado. Isso garante padronização e qualidade nos dados de localização.
+* **Restrição de Exclusão (Restrict Delete):** Para manter a integridade referencial, o sistema bloqueia a exclusão de treinadores que possuam times ativos. O usuário deve gerenciar os times antes de remover o perfil.
+* **Persistência Segura (Soft Delete):** A remoção de treinadores e times utiliza a estratégia de *Soft Delete* (`deleted_at`). Os dados não são apagados fisicamente, permitindo auditoria e evitando perda acidental de histórico.
 
-- **Quantidade Limite**: Um Time pode ter entre **1 e 5 Pokémon**. Tentativas de adicionar mais de 5 são rejeitadas com erro apropriado.
-- **Vínculo com Treinador**: Cada Time está obrigatoriamente vinculado a um único Treinador (`trainer_id`).
-- **Associação de Pokémon**: A relação entre Times e Pokémon é de **Muitos-para-Muitos**, mas implementada através de uma entidade de associação explícita chamada `TeamPokemon`. 
-- **Entidade de Associação (`TeamPokemon`)**: Esta estrutura permite rastrear quando um Pokémon foi adicionado ao time e garante que a mesma instância de Pokémon não seja duplicada no mesmo time (através de restrições de unicidade no banco de dados e validação no Use Case).
+### 2. Times (Teams)
+* **Limite de Composição:** Cada time pode ter no máximo **5 Pokémon**. O sistema rejeita automaticamente a tentativa de adicionar um 6º integrante com erro `400 Bad Request`.
+* **Prevenção de Duplicidade:** É proibido adicionar o mesmo Pokémon mais de uma vez no mesmo time. Essa regra é validada na camada de aplicação e reforçada por uma *Unique Constraint* no banco de dados.
+* **Vínculo Obrigatório:** Um time não pode existir sem um treinador responsável (Dono).
 
----
-
-## 🛡️ Regras de Negócio - Exclusão e Sincronização
-
-### Exclusão (Soft Delete)
-- **Soft Delete em Cascata**: Ao excluir um Treinador, o sistema aplica um "Soft Delete" (exclusão lógica) tanto no registro do Treinador quanto em todos os seus Times associados.
-- **Persistência de Dados**: Os registros permanecem no banco de dados com a coluna `deleted_at` preenchida, garantindo histórico e integridade referencial.
-- **Associações**: Quando um Time é removido, suas associações na tabela `team_pokemons` permanecem vinculadas ao registro inativo do time.
-
-### Sincronização com PokéAPI (Local-First)
-- **Prioridade Local**: Ao criar um time informando nomes ou IDs da PokéAPI, o sistema primeiro verifica se o Pokémon já existe no banco local.
-- **Sync On-Demand**: Se o Pokémon não existir localmente, o sistema busca os dados na PokéAPI, persiste-os no banco local e então realiza a associação com o time.
-- **Sincronização Manual**: A PokéAPI é consultada apenas se o dado for inexistente localmente ou se uma sincronização manual/agendada for acionada.
+### 3. Pokémon & PokéAPI (Cache Strategy)
+* **Estratégia Cache-Aside:** A aplicação prioriza o banco de dados local. Caso o Pokémon solicitado não exista na base, o sistema busca na PokéAPI, persiste os dados localmente (nome, tipos, imagem, ID externo) e então realiza a associação ao time.
+* **Redução de Latência:** O uso do cache local evita chamadas desnecessárias à API externa em todas as requisições, tornando a listagem de times significativamente mais rápida.
+* **Normalização de Dados:** Buscas por nome de Pokémon são tratadas como *case-insensitive*, garantindo que "Pikachu" e "pikachu" sejam reconhecidos como o mesmo registro, evitando redundância.
 
 ---
-
-## 🧪 Testes e Qualidade
-
-O projeto utiliza **SWC** para garantir que os testes rodem em milissegundos.
-
-```bash
-# Rodar todos os testes
-yarn test
-
-# Ver cobertura de código
-yarn test:cov
-```
-
----
-
-## 🔌 Integrações Externas
-
-O sistema consome dois serviços externos principais para enriquecer a experiência e garantir a consistência dos dados:
-
-### 1. PokéAPI
-Utilizada para obter dados oficiais de Pokémon (ID, Nome, Imagem, Tipos).
-- **Busca**: Realizada via `SyncPokemonUseCase`. O sistema busca por Nome ou ID.
-- **Gravação**: Os dados obtidos são persistidos no banco local (`pokemons`) para consultas futuras ultrarrápidas.
-- **Reutilização (Cache)**: Implementamos uma estratégia **Local-First**. Antes de consultar a PokéAPI, o sistema verifica se o Pokémon já existe localmente. A API externa é consultada apenas se o dado for inexistente ou se for solicitada uma atualização explícita.
-
-### 2. Serviço de CEP (ViaCEP)
-Utilizado para validar e enriquecer os dados de endereço dos Treinadores.
-- **Fluxo de Dados**: Disponibilizamos um serviço interno (`CepService` / `GetCepAddressUseCase`) que consome a API do ViaCEP.
-- **Uso**: O frontend ou consumidor da API pode consultar o endereço completo a partir de um CEP via endpoint `GET /trainers/address/:cep`.
-- **Persistência**: Os dados de endereço (logradouro, bairro, cidade, estado) são persistidos junto ao registro do Treinador no banco de dados, garantindo que a informação esteja disponível mesmo se o serviço externo estiver instável.
 
 ---
 

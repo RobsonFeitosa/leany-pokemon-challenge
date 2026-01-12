@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, IsString, MinLength } from "class-validator";
+import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength } from "class-validator";
 
 export class CreateTrainerDto {
     @ApiProperty({ example: 'Ash Ketchum' })
@@ -20,21 +20,21 @@ export class CreateTrainerDto {
 
     @ApiProperty({ example: 'Pallet Town St' })
     @IsString()
-    @IsNotEmpty()
-    street: string;
+    @IsOptional()
+    street?: string;
 
     @ApiProperty({ example: 'Central' })
     @IsString()
-    @IsNotEmpty()
-    neighborhood: string;
+    @IsOptional()
+    neighborhood?: string;
 
     @ApiProperty({ example: 'Pallet Town' })
     @IsString()
-    @IsNotEmpty()
-    city: string;
+    @IsOptional()
+    city?: string;
 
     @ApiProperty({ example: 'Kanto' })
     @IsString()
-    @IsNotEmpty()
-    state: string;
+    @IsOptional()
+    state?: string;
 }
